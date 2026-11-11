@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌿 동물의 숲 맞춤형 자리바꾸기 🍃</title>
+    <style>
+        :root {
+            --ac-bg: #e8f5e9;
+            --ac-box: #ffffff;
+            --ac-wood: #8d6e63;
+            --ac-green: #66bb6a;
+            --ac-dark-green: #2e7d32;
+            --ac-yellow: #fff9c4;
+            --border-color: #c8e6c9;
+        }
+
+        body {
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+            background-color: var(--ac-bg);
+            background-image: radial-gradient(#c8e6c9 15%, transparent 16%), radial-gradient(#c8e6c9 15%, transparent 16%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background-color: var(--ac-box);
+            border: 4px solid var(--ac-wood);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            padding: 25px;
+        }
+
+        h1 {
+            color: var(--ac-dark-green);
+            margin-bottom: 5px;
+            font-size: 26px;
+        }
+
+        .subtitle {
+            color: #558b2f;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .control-panel {
+            background-color: #f1f8e9;
+            border: 2px dashed #aed581;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .control-panel label {
+            font-weight: bold;
+            color: var(--ac-dark-green);
+        }
+
+        .control-panel input {
+            width: 50px;
+            padding: 6px;
+            text-align: center;
+            font-size: 16px;
+            border: 2px solid #aed581;
+            border-radius: 6px;
+            background-color: #fff;
+        }
+
+        .btn {
+            background-color: var(--ac-green);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 0 #388e3c;
+            transition: all 0.1s ease;
+        }
+
+        .btn:hover {
+            background-color: #57bb5a;
+        }
+
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #388e3c;
+        }
+
+        .bulletin-board {
+            background-color: var(--ac-wood);
+            color: white;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            letter-spacing: 4px;
+            box-shadow: 0 4px 0 #5d4037;
+            border: 2px solid #efebe9;
+        }
+
+        #seat-grid {
+            display: grid;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 25px;
+            padding: 10px;
+        }
+
+        .seat-card {
+            background-color: var(--ac-yellow);
+            border: 2px solid #fbc02d;
+            border-radius: 12px;
+            padding: 12px 8px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #f57f17;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 55px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .seat-card.assigned {
+            background-color: #e0f2f1;
+            border: 2px solid #4db6ac;
+            color: #00796b;
+        }
+
+        .seat-card.fixed {
+            background-color: #ffebee;
+            border: 2px solid #ef5350;
+            color: #c62828;
+        }
+
+        .seat-card:hover {
+            transform: scale(1.05);
+            border-color: #ff5722;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .name-input-section {
+            text-align: left;
+            background: #fffde7;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #ffe082;
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .name-input-section textarea {
+            width: 100%;
+            height: 70px;
+            padding: 8px;
+            border: 1px solid #ffd54f;
+            border-radius: 6px;
+            font-family: inherit;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        .edit-tip {
+            font-size: 12px;
+            color: #78909c;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌿 동물의 숲 맞춤형 자리바꾸기 🍃</h1>
+    <p class="subtitle">"앞자리 고정 및 성향별 배려가 가능한 스마트 교실 시스템!" 🌰</p>
+
+    <div class="control-panel">
+        <div>
+            <label for="rows">가로 줄수:</label>
+            <input type="number" id="rows" value="5" min="1" max="10">
+        </div>
+        <div>
+            <label for="cols">세로 칸수:</label>
+            <input type="number" id="cols" value="6" min="1" max="10">
+        </div>
+        <button class="btn" onclick="shuffleSeats()">🍃 성향 맞춤 추첨 시작!</button>
+    </div>
+
+    <div class="bulletin-board">참나무 안내판 (칠판 앞쪽)</div>
+
+    <!-- 자리 배치도가 그려질 공간 -->
+    <div id="seat-grid"></div>
+
+    <div class="input-group">
+        <div class="name-input-section">
+            <label for="student-names"><strong>🐾 전체 주민(학생) 명단:</strong></label><br>
+            <textarea id="student-names" placeholder="쉼표로 구분해 입력하세요">김민수, 이서연, 박준호, 정예은, 최지우, 한지민, 오준서, 강하늘, 윤서준, 조민재, 백지헌, 송유진</textarea>
+        </div>
+        <div class="name-input-section" style="background: #ffebee; border-color: #ffcdd2;">
+            <label for="fixed-names"><strong>⭐ 앞자리 고정 대상 (특별 배려 학생):</strong></label><br>
+            <textarea id="fixed-names" placeholder="앞쪽에 꼭 앉아야 하는 학생 이름 (쉼표로 구분)"></textarea>
+            <div class="edit-tip">💡 입력된 학생은 맨 앞 열(1열)에 우선 배치됩니다.</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentSeats = [];
+    let fixedStatus = []; // 고정석 여부 체크용
+
+    function renderEmptyGrid() {
+        const rows = parseInt(document.getElementById('rows').value);
+        const cols = parseInt(document.getElementById('cols').value);
+        
+        currentSeats = Array(rows * cols).fill('텅 빈 텐트');
+        fixedStatus = Array(rows * cols).fill(false);
+        drawGrid(rows, cols);
+    }
+
+    function drawGrid(rows, cols) {
+        const grid = document.getElementById('seat-grid');
+        grid.style.gridTemplateColumns = `repeat(${cols}, minmax(90px, 1fr))`;
+        grid.innerHTML = '';
+
+        currentSeats.forEach((name, index) => {
+            const card = document.createElement('div');
+            let className = 'seat-card';
+            if (fixedStatus[index]) className += ' fixed';
+            else if (name !== '텅 빈 텐트') className += ' assigned';
+            
+            card.className = className;
+            let badge = fixedStatus[index] ? '⭐ 앞자리 고정' : `자리 ${index + 1}`;
+            
+            card.innerHTML = `<span style="font-size:11px; color:#666; margin-bottom:2px;">${badge}</span><strong>${name}</strong>`;
+            
+            card.onclick = function() {
+                const newName = prompt(`${index + 1}번 자리의 학생 이름을 수정하세요:`, name);
+                if (newName !== null) {
+                    currentSeats[index] = newName.trim() === '' ? '텅 빈 텐트' : newName.trim();
+                    fixedStatus[index] = false; // 수정한 자리는 고정 해제
+                    drawGrid(rows, cols);
+                }
+            };
+
+            grid.appendChild(card);
+        });
+    }
+
+    function shuffleSeats() {
+        const rows = parseInt(document.getElementById('rows').value);
+        const cols = parseInt(document.getElementById('cols').value);
+        const totalSeats = rows * cols;
+
+        const rawNames = document.getElementById('student-names').value;
+        let students = rawNames.split(/[,,\n]+/).map(name => name.trim()).filter(name => name.length > 0);
+
+        const rawFixed = document.getElementById('fixed-names').value;
+        let fixedStudents = rawFixed.split(/[,,\n]+/).map(name => name.trim()).filter(name => name.length > 0);
+
+        if (students.length === 0) {
+            alert('전체 주민(학생) 명단을 입력해 주세요!');
+            return;
+        }
+
+        if (students.length > totalSeats) {
+            alert(`주민 수(${students.length}명)가 전체 자리 수(${totalSeats}개)보다 많습니다! 줄과 칸을 늘려주세요.`);
+            return;
+        }
+
+        // 초기화
+        currentSeats = Array(totalSeats).fill('텅 빈 텐트');
+        fixedStatus = Array(totalSeats).fill(false);
+
+        // 1. 앞자리 고정 학생 먼저 배치 (0번 인덱스부터 차례대로 맨 앞줄)
+        let availableFixedSeats = Math.min(cols, totalSeats); // 첫 번째 줄 칸수만큼
+        let remainingStudents = [...students];
+
+        fixedStudents.forEach(fName => {
+            // 전체 명단에 있는 학생인지 확인
+            const indexInStudents = remainingStudents.indexOf(fName);
+            if (indexInStudents !== -1) {
+                // 빈 앞자리 찾기
+                let targetSeat = -1;
+                for (let i = 0; i < availableFixedSeats; i++) {
+                    if (currentSeats[i] === '텅 빈 텐트') {
+                        targetSeat = i;
+                        break;
+                    }
+                }
+                if (targetSeat !== -1) {
+                    currentSeats[targetSeat] = fName;
+                    fixedStatus[targetSeat] = true;
+                    remainingStudents.splice(indexInStudents, 1); // 남은 학생 명단에서 제거
+                }
+            }
+        });
+
+        // 2. 나머지 학생들 무작위 섞기
+        for (let i = remainingStudents.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [remainingStudents[i], remainingStudents[j]] = [remainingStudents[j], remainingStudents[i]];
+        }
+
+        // 3. 빈 자리에 남은 학생들 채우기
+        let studentIdx = 0;
+        for (let i = 0; i < totalSeats; i++) {
+            if (currentSeats[i] === '텅 빈 텐트') {
+                if (studentIdx < remainingStudents.length) {
+                    currentSeats[i] = remainingStudents[studentIdx++];
+                } else {
+                    currentSeats[i] = '텅 빈 텐트';
+                }
+            }
+        }
+
+        drawGrid(rows, cols);
+    }
+
+    window.onload = function() {
+        renderEmptyGrid();
+    };
+
+    document.getElementById('rows').addEventListener('change', renderEmptyGrid);
+    document.getElementById('cols').addEventListener('change', renderEmptyGrid);
+</script>
+
+</body>
+</html>
